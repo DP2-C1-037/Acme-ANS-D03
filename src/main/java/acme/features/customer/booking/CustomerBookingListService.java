@@ -12,12 +12,12 @@ import acme.entities.booking.Booking;
 import acme.realms.Customer;
 
 @GuiService
-public class BookingListService extends AbstractGuiService<Customer, Booking> {
+public class CustomerBookingListService extends AbstractGuiService<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private BookingRepository repository;
+	private CustomerBookingRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -42,7 +42,7 @@ public class BookingListService extends AbstractGuiService<Customer, Booking> {
 	public void unbind(final Booking booking) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(booking, "locator-code", "purcharse-moment");
+		dataset = super.unbindObject(booking, "locator-code", "purchase-moment");
 		dataset.put("price", booking.getPrice());
 		super.getResponse().addData(dataset);
 	}

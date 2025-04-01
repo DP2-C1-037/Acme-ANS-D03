@@ -16,12 +16,12 @@ import acme.entities.passenger.Passenger;
 import acme.realms.Customer;
 
 @GuiService
-public class AssignedToCreateService extends AbstractGuiService<Customer, AssignedTo> {
+public class CustomerAssignedToCreateService extends AbstractGuiService<Customer, AssignedTo> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssignedToRepository repository;
+	private CustomerAssignedToRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -62,10 +62,16 @@ public class AssignedToCreateService extends AbstractGuiService<Customer, Assign
 	@Override
 	public void validate(final AssignedTo assignedTo) {
 		{
-			boolean bothInDraftMode;
+			boolean passengerInDraftMode;
 
-			bothInDraftMode = assignedTo.getBooking().isDraftMode() && assignedTo.getPassenger().isDraftMode();
-			super.state(bothInDraftMode, "booking", "acme.validation.assignedTo.draftMode.message");
+			passengerInDraftMode = assignedTo.getPassenger().isDraftMode();
+			super.state(passengerInDraftMode, "passenger", "acme.validation.assignedTo.passenger.draftMode.message");
+		}
+		{
+			boolean bookingInDraftMode;
+
+			bookingInDraftMode = assignedTo.getBooking().isDraftMode();
+			super.state(bookingInDraftMode, "booking", "acme.validation.assignedTo.booking.draftMode.message");
 		}
 		{
 			boolean alreadyAssigned;

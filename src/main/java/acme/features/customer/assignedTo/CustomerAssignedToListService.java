@@ -12,12 +12,12 @@ import acme.entities.mappings.AssignedTo;
 import acme.realms.Customer;
 
 @GuiService
-public class AssignedToListService extends AbstractGuiService<Customer, AssignedTo> {
+public class CustomerAssignedToListService extends AbstractGuiService<Customer, AssignedTo> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssignedToRepository repository;
+	private CustomerAssignedToRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 

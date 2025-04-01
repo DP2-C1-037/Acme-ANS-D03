@@ -15,12 +15,12 @@ import acme.entities.passenger.Passenger;
 import acme.realms.Customer;
 
 @GuiService
-public class AssignedToShowService extends AbstractGuiService<Customer, AssignedTo> {
+public class CustomerAssignedToShowService extends AbstractGuiService<Customer, AssignedTo> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssignedToRepository repository;
+	private CustomerAssignedToRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -61,8 +61,8 @@ public class AssignedToShowService extends AbstractGuiService<Customer, Assigned
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		bookings = this.repository.findAllNotPublishedBookingsFromCustomerId(customer.getId());
-		passengers = this.repository.findAllNotPublishedPassengersFromCustomerId(customer.getId());
+		bookings = this.repository.findAllBookingsFromCustomerId(customer.getId());
+		passengers = this.repository.findAllPassengersFromCustomerId(customer.getId());
 
 		bookingChoices = SelectChoices.from(bookings, "locatorCode", assignedTo.getBooking());
 		passengerChoices = SelectChoices.from(passengers, "passportNumber", assignedTo.getPassenger());
