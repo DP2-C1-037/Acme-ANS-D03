@@ -33,7 +33,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 		bookingId = super.getRequest().getData("id", int.class);
 		booking = this.repository.findBookingById(bookingId);
-		status = super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
+		status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -56,10 +56,11 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		SelectChoices flightsChoices;
 		Dataset dataset;
 
-		flights = this.repository.findAllFlights();
+		flights = this.repository.findAllFlightsPublished();
 
 		travelClassesChoices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
-		flightsChoices = SelectChoices.from(flights, "id", booking.getFlight());
+		flightsChoices = SelectChoices.from(flights, "tag", booking.getFlight());
+		// TODO: Change choices display text from tag to the origin and destiny of the flight, to be implemented when flight derived attributes are fixed
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "lastNibble", "draftMode");
 		dataset.put("price", booking.getPrice());
@@ -67,8 +68,11 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		dataset.put("travelClass", travelClassesChoices.getSelected().getKey());
 		dataset.put("flights", flightsChoices);
 		dataset.put("flight", flightsChoices.getSelected().getKey());
-		//dataset.put("origin-city", booking.getFlight().getOriginCity());
-		//dataset.put("destination-city", booking.getFlight().getDestinationCity());
+		//dataset.put("originCity", booking.getFlight().getOriginCity());
+		//dataset.put("destinationCity", booking.getFlight().getDestinationCity());
+		//dataset.put("scheduledDeparture", booking.getFlight().getScheduledDeparture());
+		//dataset.put("scheduledArrival", booking.getFlight().getScheduledDeparture());
+		//TODO: When flight custom attributes are fixed
 
 		super.getResponse().addData(dataset);
 	}

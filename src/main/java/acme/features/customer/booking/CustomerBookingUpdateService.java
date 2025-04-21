@@ -51,7 +51,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void bind(final Booking booking) {
-		super.bindObject(booking, "locatorCode", "purchaseMoment", "lastNibble", "draftMode");
+		super.bindObject(booking, "locatorCode", "travelClass", "lastNibble", "flight");
 	}
 
 	@Override
@@ -72,10 +72,11 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		SelectChoices flightsChoices;
 		Dataset dataset;
 
-		flights = this.repository.findAllFlights();
+		flights = this.repository.findAllFlightsPublished();
 
 		travelClassesChoices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
-		flightsChoices = SelectChoices.from(flights, "id", booking.getFlight());
+		flightsChoices = SelectChoices.from(flights, "tag", booking.getFlight());
+		// TODO: Change choices display text from tag to the origin and destiny of the flight, to be implemented when flight derived attributes are fixed
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "lastNibble", "draftMode");
 		dataset.put("price", booking.getPrice());
@@ -83,6 +84,11 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		dataset.put("travelClass", travelClassesChoices.getSelected().getKey());
 		dataset.put("flights", flightsChoices);
 		dataset.put("flight", flightsChoices.getSelected().getKey());
+		//dataset.put("originCity", booking.getFlight().getOriginCity());
+		//dataset.put("destinationCity", booking.getFlight().getDestinationCity());
+		//dataset.put("scheduledDeparture", booking.getFlight().getScheduledDeparture());
+		//dataset.put("scheduledArrival", booking.getFlight().getScheduledDeparture());
+		//TODO: When flight custom attributes are fixed
 
 		super.getResponse().addData(dataset);
 	}

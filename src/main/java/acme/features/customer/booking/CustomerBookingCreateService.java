@@ -47,13 +47,14 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		booking.setTravelClass(TravelClass.ECONOMY);
 		booking.setLastNibble(null);
 		booking.setCustomer(customer);
+		booking.setDraftMode(true);
 
 		super.getBuffer().addData(booking);
 	}
 
 	@Override
 	public void bind(final Booking booking) {
-		super.bindObject(booking, "locatorCode", "travelClass", "lastNibble", "flight", "draftMode");
+		super.bindObject(booking, "locatorCode", "travelClass", "lastNibble", "flight");
 	}
 
 	@Override
@@ -73,14 +74,17 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices flightsChoices;
 		Dataset dataset;
 
-		flights = this.repository.findAllFlights();
+		flights = this.repository.findAllFlightsPublished();
 
 		travelClassesChoices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
-		flightsChoices = SelectChoices.from(flights, "id", null);
+		flightsChoices = SelectChoices.from(flights, "tag", null);
+		// TODO: Change choices display text from tag to the origin and destiny of the flight, to be implemented when flight derived attributes are fixed
 
 		dataset = super.unbindObject(booking, "locatorCode", "travelClass", "lastNibble", "flight", "draftMode");
 		dataset.put("travelClasses", travelClassesChoices);
+		dataset.put("travelClass", travelClassesChoices.getSelected().getKey());
 		dataset.put("flights", flightsChoices);
+		dataset.put("flight", flightsChoices.getSelected().getKey());
 
 		super.getResponse().addData(dataset);
 	}

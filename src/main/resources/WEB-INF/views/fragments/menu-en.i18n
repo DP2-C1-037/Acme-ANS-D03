@@ -44,14 +44,12 @@ master.menu.consumer.favourite-link = Favourite link
 master.menu.customer = Customer
 master.menu.customer.bookings = Bookings
 master.menu.customer.passengers = Passengers
-master.menu.customer.assigned-to = Bookings assignations
 
 # master.menu.flightCrewMember ##########################################################
 
 master.menu.flightCrewMember = Flight Crew Member
 master.menu.flightCrewMember.flightAssignmentCompleted = List completed flight assignments 
 master.menu.flightCrewMember.flightAssignmentPlanned = List planned flight assignments 
-master.menu.flightCrewMember.activityLogs = List activity logs 
 
 # master.menu.technician ##########################################################
 master.menu.technician = Technician
@@ -63,7 +61,12 @@ master.menu.technician.task-mine = List my tasks
 # master.menu.airlineManager ##########################################################
 master.menu.airlineManager = Manager
 master.menu.airlineManager.flight = List my flights
+master.menu.airlineManager.leg = List my legs
 
+# master.menu.assistance-agent #####################################
+master.menu.assistance-agent = Assistance agent
+master.menu.assistance-agent.claim.list-completed = Completed claims
+master.menu.assistance-agent.claim.list-undergoing = Undergoing claims
 # master.menu.user-account ####################################################
 
 master.menu.user-account = Account
@@ -72,3 +75,6 @@ master.menu.user-account.become-provider = Become a provider
 master.menu.user-account.provider-profile = Provider profile
 master.menu.user-account.become-consumer = Become a consumer
 master.menu.user-account.consumer-profile = Consumer profile
+
+
+

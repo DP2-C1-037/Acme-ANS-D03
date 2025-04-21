@@ -51,31 +51,42 @@ public class Leg extends AbstractEntity {
 	@Automapped
 	private LegStatus			status;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Derived attributes
 
+
 	@Transient
-	private Double				duration;
+	public Double getDuration() {
+		double res = 0.;
+		if (this.scheduledDeparture != null && this.scheduledArrival != null)
+			res = (this.scheduledArrival.getTime() - this.scheduledDeparture.getTime()) / (1000.0 * 60 * 60);
+		return res;
+	}
 
 	// Relationships
 
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Flight				flight;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Airport				departureAirport;
+	private Flight		flight;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Airport				arrivalAirport;
+	private Airport		departureAirport;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Aircraft			deployedAircraft;
+	private Airport		arrivalAirport;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Aircraft	deployedAircraft;
 
 }
